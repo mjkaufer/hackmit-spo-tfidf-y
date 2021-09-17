@@ -4,7 +4,7 @@
 # export SPOTIPY_CLIENT_SECRET=...
 # export SPOTIPY_REDIRECT_URI=...
 # for the URI, make sure you add whatever dummy URL you're using to your app
-import sys
+
 import spotipy
 import spotipy.util as util
 import time
@@ -87,49 +87,3 @@ class SpotifyScraper:
             time.sleep(0.05)
 
         return {**{k: v for k, v in results.items() if v is not None}, **existingPlaylist}
-
-
-if __name__ == '__main__':
-    artistId = sys.argv[2] if 2 in sys.argv else '5BvJzeQpmsdsFp4HGUYUEx'
-    scraper = SpotifyScraper()
-    scraper.authenticate()
-    discography, trackToName, albumToName = scraper.getArtistDiscography(artistId=artistId)
-    tracks = {song for songs in discography.values() for song in songs}
-
-    print("Discography is", discography)
-
-    runningPlaylistResults = {}
-    try:
-        for i in range(4):
-            for genre in ["indie", "indie rock", "indie pop", "2000s indie", "indie punk"]:
-                runningPlaylistResults = scraper.playlistQuery(genre, tracks, runningPlaylistResults)
-    except:
-        print("Short circuiting, got an error :(")
-    finally:
-        print("Output is", runningPlaylistResults)
-
-        # print("Sanitized output is", runningPlaylistResults)
-        print("Output that looks purdy")
-
-        print({k:{**v, 'tracks': [trackToName[t] for t in v['tracks']]} for k,v in runningPlaylistResults.items()})
-
-    # mapped_discography = {albumToName[k]:[trackToName[el] for el in v] for k,v in discography.items()}
-    # print("mapped disco is", mapped_discography)
-
-
-#     tracks = set("""4S8d14HvHb70ImctNgVzQQ
-# 78TTtXnFQPzwqlbtbwqN0y
-# 1PS1QMdUqOal0ai3Gt7sDQ
-# 2gZUPNdnz5Y45eiGxpHGSc
-# 3U21A07gAloCc4P7J8rxcn
-# 6C7RJEIUDqKkJRZVWdkfkH
-# 4EWCNWgDS8707fNSZ1oaA5
-# 722tgOgdIbNe3BEyLnejw4
-# 19a3JfW8BQwqHWUMbcqSx8
-# 2KpCpk6HjXXLb7nnXoXA5O""".split("\n"))
-#     runningPlaylistResults = {}
-#     for i in range(3):
-#         for genre in ["rap", "hip hop"]:
-#             runningPlaylistResults = scraper.playlistQuery(genre, tracks, runningPlaylistResults)
-
-#     print(runningPlaylistResults)
