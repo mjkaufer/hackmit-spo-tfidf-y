@@ -1,6 +1,6 @@
 # HackMIT Spo-tfidf-y
 
-Helper code for HackMIT tech talk!
+Helper code for HackMIT tech talk! [Slides here](https://docs.google.com/presentation/d/1R1Vioi7PsGH1SoCYP3x-N5GYycASERyDmtGsa9c-7zU/edit?usp=sharing)
 
 ## Setup
 
